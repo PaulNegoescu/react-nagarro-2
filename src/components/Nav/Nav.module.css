@@ -1,0 +1,27 @@
+.topNav {
+  background-color: #333;
+  color: #efefef;
+  padding: 1rem 1.5rem;
+
+  & menu {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover,
+    &.active {
+      color: #bada55;
+    }
+  }
+}
+
+.highlight {
+  background-color: yellow;
+}
