@@ -1,6 +1,7 @@
 import { Card } from './Card';
 import type { Film } from './FilmTypes';
 import { useEffect, useState } from 'react';
+import { FilmRepository } from "../../DataAccess/FilmRepository";
 
 import styles from './Film.module.css';
 
@@ -8,9 +9,12 @@ export function FilmList() {
   const [films, setFilms] = useState<Film[] | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:3210/films')
-      .then((res) => res.json())
-      .then(setFilms);
+    (async function () {
+      const filmRepository = new FilmRepository();
+
+      const films = await filmRepository.getAllShallow();
+      setFilms(films);
+    })();
   }, []);
 
   return (
