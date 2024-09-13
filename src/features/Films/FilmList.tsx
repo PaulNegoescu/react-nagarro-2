@@ -1,6 +1,7 @@
 import { Card } from './Card';
 import type { Film } from './FilmTypes';
 import { useEffect, useState } from 'react';
+import { FilmRepository } from "../../DataAccess/FilmRepository";
 
 import styles from './Film.module.css';
 
