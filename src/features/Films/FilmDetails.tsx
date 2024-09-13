@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Film } from './FilmTypes';
+import { FilmRepository } from "../../DataAccess/FilmRepository";
 
 export function FilmDetails() {
   const [film, setFilm] = useState<Film | null>(null);
@@ -8,39 +9,14 @@ export function FilmDetails() {
 
   useEffect(() => {
     async function getFilm() {
-      const data = await fetch(`http://localhost:3210/films/${id}`).then(
-        (res) => res.json()
-      );
+      const filmRepository = new FilmRepository();
+      const film = await filmRepository.getByIdFull(id);
 
-      if (!data) {
+      if (!film) {
         return null;
       }
-      // const completeFilm = {...data};
-      const externalResources = [
-        'characters',
-        'starships',
-        'vehicles',
-        'planets',
-        'species',
-      ] as const;
-      const relatedEntities: Partial<
-        Record<(typeof externalResources)[number], any>
-      > = {};
-      for (const resource of externalResources) {
-        if (data[resource]) {
-          const resourcePromises = [];
-          for (const resId of data[resource]) {
-            resourcePromises.push(
-              fetch(`http://localhost:3210/${resource}/${resId}`).then((res) =>
-                res.json()
-              )
-            );
-          }
-          relatedEntities[resource] = await Promise.all(resourcePromises);
-        }
-      }
 
-      setFilm({...data, ...relatedEntities});
+      setFilm(film);
     }
 
     getFilm();
@@ -51,7 +27,7 @@ export function FilmDetails() {
   }
 
   const crawlParts = film.opening_crawl.split('\r\n');
-  const jsxCrawl = crawlParts.map((part) => <p>{part}</p>);
+  const jsxCrawl = crawlParts.map((part, index) => <p key={'line' + index}>{part}</p>);
 
   console.log(film);
 
