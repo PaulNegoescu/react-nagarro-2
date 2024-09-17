@@ -1,9 +1,34 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Film } from './FilmTypes';
+interface FilmWithExternalEntities extends Film {
+  characters: Record<string, string>[]
+  starships: Record<string, string>[]
+}
+
+const externalResources = [
+  'characters',
+  'starships',
+  'vehicles',
+  'planets',
+  'species',
+] as const;
+
+function getAllRelatedEntities(arrayOfIds: number[], resourceName: string): Promise<Record<string,string>>[] {
+  const resourcePromises = [];
+  for (const resId of arrayOfIds) {
+    resourcePromises.push(
+      fetch(`http://localhost:3210/${resourceName}/${resId}`).then((res) =>
+        res.json()
+      ) as Promise<Record<string,string>>
+    );
+  }
+
+  return resourcePromises;
+}
 
 export function FilmDetails() {
-  const [film, setFilm] = useState<Film | null>(null);
+  const [film, setFilm] = useState<FilmWithExternalEntities | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -15,29 +40,11 @@ export function FilmDetails() {
       if (!data) {
         return null;
       }
-      // const completeFilm = {...data};
-      const externalResources = [
-        'characters',
-        'starships',
-        'vehicles',
-        'planets',
-        'species',
-      ] as const;
-      const relatedEntities: Partial<
-        Record<(typeof externalResources)[number], any>
-      > = {};
+     
+      const relatedEntities: Partial<Record<(typeof externalResources)[number], Record<string, string>[]>> = {};
       for (const resource of externalResources) {
-        if (data[resource]) {
-          const resourcePromises = [];
-          for (const resId of data[resource]) {
-            resourcePromises.push(
-              fetch(`http://localhost:3210/${resource}/${resId}`).then((res) =>
-                res.json()
-              )
-            );
-          }
-          relatedEntities[resource] = await Promise.all(resourcePromises);
-        }
+        if (!data[resource]) continue;
+        relatedEntities[resource] = await Promise.all(getAllRelatedEntities(data[resource], resource));
       }
 
       setFilm({...data, ...relatedEntities});
