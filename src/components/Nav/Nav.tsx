@@ -21,6 +21,16 @@ export function Nav() {
             Films
           </BrandNavLink>
         </li>
+        <li className={styles.pushRight}>
+          <BrandNavLink to="login">
+            Login
+          </BrandNavLink>
+        </li>
+        <li>
+          <BrandNavLink to="register">
+            Register
+          </BrandNavLink>
+        </li>
       </menu>
     </nav>
   )

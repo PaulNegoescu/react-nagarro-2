@@ -12,3 +12,30 @@ body {
 .siteWrapper {
   padding: 0 .5rem;
 }
+
+.brandForm {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 200px 1fr;
+
+  h1 {
+    grid-column: 1 / -1;
+  }
+  
+  input:not([type=checkbox], [type='radio'], [type=color]) {
+    border: 1px solid #333;
+    border-radius: 3px;
+    padding: .5rem 1rem;
+  }
+
+  .actionButton {
+    grid-column-start: 2;
+    justify-self: start;
+  }
+
+  label {
+    justify-self: end;
+    align-self: center;
+  }
+
+}
