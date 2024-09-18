@@ -1,5 +1,33 @@
 {
   "users": [
+    {
+      "email": "p@p.com",
+      "password": "$2a$10$wqBOSZHrt4ieVPvaFHYCxeQa..iAskWEcyYq3jI61QAyd7ire4U4y",
+      "firstName": "Paul",
+      "lastName": "Negoescu",
+      "id": 1
+    },
+    {
+      "email": "a@a.com",
+      "password": "$2a$10$XMD6zLepTB34OpwRzvKXFeLBuR0Z/4GIazXvtJZhUBgkMy8nd5khm",
+      "firstName": "Paul",
+      "lastName": "Negoescu",
+      "id": 2
+    },
+    {
+      "email": "y@p.com",
+      "password": "$2a$10$TI/jH95T9vAGrOUaucNsq.B5pJvmTOYLA0Jm4sBoRqrspvoMXCnoq",
+      "firstName": "paul",
+      "lastName": "parul",
+      "id": 3
+    },
+    {
+      "email": "c@c.com",
+      "password": "$2a$10$ExEurO6oQQP.UAfUxUlsAul.9o8jdlJxysdIRG.YD5lK8dnq6dTBW",
+      "firstName": "Paul",
+      "lastName": "Test",
+      "id": 4
+    }
   ],
   "films": [
     {

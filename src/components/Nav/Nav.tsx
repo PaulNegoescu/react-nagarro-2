@@ -1,8 +1,10 @@
+import { useAuthContext } from "../../features/Auth/AuthContext";
 import { BrandNavLink } from "./BrandNavLink";
 
 import styles from './Nav.module.css';
 
 export function Nav() {
+  const { user } = useAuthContext();
   return (
     <nav className={styles.topNav}>
       <menu>
@@ -21,16 +23,31 @@ export function Nav() {
             Films
           </BrandNavLink>
         </li>
-        <li className={styles.pushRight}>
-          <BrandNavLink to="login">
-            Login
-          </BrandNavLink>
-        </li>
-        <li>
-          <BrandNavLink to="register">
-            Register
-          </BrandNavLink>
-        </li>
+
+        {!user && (
+          <>
+            <li className={styles.pushRight}>
+              <BrandNavLink to="login">
+                Login
+              </BrandNavLink>
+            </li>
+            <li>
+              <BrandNavLink to="register">
+                Register
+              </BrandNavLink>
+            </li>
+          </>
+        )}
+
+        {user && (
+          <li className={styles.pushRight}>
+            Welcome, {user.firstName}!{' '}
+            <a href="/">
+              Logout
+            </a>
+          </li>
+        )}
+
       </menu>
     </nav>
   )

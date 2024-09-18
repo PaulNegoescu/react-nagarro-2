@@ -38,4 +38,9 @@ body {
     align-self: center;
   }
 
+  .errorMessage {
+    grid-column-start: 2;
+    margin: 0;
+    color: #c00;
+  }
 }
