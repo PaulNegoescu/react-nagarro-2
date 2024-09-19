@@ -1,5 +1,6 @@
 import { createContext, type ReactNode, useContext, useState } from "react";
 import type { AuthValue, ContextValue } from './AuthTypes';
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 const initialValue: AuthValue = {
   user: null,
@@ -9,7 +10,7 @@ const initialValue: AuthValue = {
 export const AuthContext = createContext<ContextValue | null>(null);
 
 export function AuthContextProvider({children}: {children: ReactNode}) {
-  const [auth, setAuth] = useState(initialValue);
+  const [auth, setAuth] = useLocalStorageState('auth', initialValue);
 
   function login(data: AuthValue) {
     setAuth(data);

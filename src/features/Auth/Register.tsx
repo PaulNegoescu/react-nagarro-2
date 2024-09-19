@@ -1,23 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { type InferType, object, string, ref } from 'yup';
 import { useAuthContext } from './AuthContext';
-
-const validationSchema = object({
-  email: string()
-    .required('Please provide a valid email address.')
-    .email('Please provide a valid email address.'),
-  password: string()
-    .required('Please choose a password.')
-    .min(6, 'The password should be at least 6 characters long.'),
-  retypePassword: string().oneOf(
-    [ref('password')],
-    'The passwords do not match.'
-  ),
-  firstName: string().required('Please tell us your first name.'),
-  lastName: string().required('Please tell us your last name.'),
-});
+import { RegisterFormData, registerSchema } from './ValidationSchemas';
 
 export function Register() {
   const {
@@ -25,12 +10,12 @@ export function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(registerSchema),
   });
 
   const { login } = useAuthContext();
 
-  async function handleRegister(values: InferType<typeof validationSchema>) {
+  async function handleRegister(values: RegisterFormData) {
     const send2Server = {...values};
     delete send2Server.retypePassword;
     const data = await fetch('http://localhost:3210/register', {

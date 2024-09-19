@@ -4,7 +4,8 @@ import { BrandNavLink } from "./BrandNavLink";
 import styles from './Nav.module.css';
 
 export function Nav() {
-  const { user } = useAuthContext();
+  const { user, logout } = useAuthContext();
+
   return (
     <nav className={styles.topNav}>
       <menu>
@@ -42,7 +43,10 @@ export function Nav() {
         {user && (
           <li className={styles.pushRight}>
             Welcome, {user.firstName}!{' '}
-            <a href="/">
+            <a href="/" onClick={(e) => {
+              e.preventDefault();
+              logout();
+            }}>
               Logout
             </a>
           </li>
