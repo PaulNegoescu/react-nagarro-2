@@ -34,11 +34,11 @@ export function useLocalStorageState<S>(
     }
   }, []);
 
-  function isStateFunction<F>(fct: F): fct is () => S {
+  function isStateFunction(fct: any): fct is () => S {
     return typeof fct === 'function';
   }
 
-  function isSetStateFunction<F>(fct: F): fct is (prevState: S) => S {
+  function isSetStateFunction(fct: any): fct is (prevState: S) => S {
     return typeof fct === 'function';
   }
 

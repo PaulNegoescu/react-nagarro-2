@@ -1,15 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { FilmList } from "../../features/Films/FilmList";
-import { FilmDetails } from "../../features/Films/FilmDetails";
-import { Counter } from "../../features/Counter/Counter";
-import { Nav } from "../Nav/Nav";
-import { Register } from "../../features/Auth/Register";
-import { Login } from "../../features/Auth/Login";
+import { FilmList, FilmDetails, EditFilm } from "@/features/Films";
+import { Counter } from "@/features/Counter/Counter";
+import { Register, Login, AuthContextProvider } from "@/features/Auth";
+import { Nav } from "@/components/Nav/Nav";
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import { AuthContextProvider } from "../../features/Auth/AuthContext";
 
 export function App() {
   return (
@@ -24,6 +21,7 @@ export function App() {
           <Route path="login" element={<Login />} />
           <Route path="films" element={<FilmList />} />
           <Route path="films/:id" element={<FilmDetails />} />
+          <Route path="films/:id/edit" element={<EditFilm />} />
           <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
       </div>

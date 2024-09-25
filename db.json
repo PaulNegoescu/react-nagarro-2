@@ -27,6 +27,13 @@
       "firstName": "Paul",
       "lastName": "Test",
       "id": 4
+    },
+    {
+      "email": "u@p.com",
+      "password": "$2a$10$GyRKlZrBcjgT4irM1.wmvu9Nw.ED5uvpQo0mlKWxeLST4YAnvHoVu",
+      "firstName": "Paul",
+      "lastName": "Negoescu",
+      "id": 5
     }
   ],
   "films": [

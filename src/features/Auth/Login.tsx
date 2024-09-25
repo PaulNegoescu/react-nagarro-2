@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './AuthContext';
 import { LoginFormData, loginSchema } from './ValidationSchemas';
+import { Input } from '@/components/form/Input';
 
 export function Login() {
   const {
@@ -40,15 +41,21 @@ export function Login() {
       noValidate
     >
       <h1>Login</h1>
-      <label htmlFor="email">Email</label>
-      <input type="email" id="email" {...register('email')} />
-      {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+      <Input
+        id="email"
+        type="email"
+        labelText="Email"
+        errorMessage={errors.email?.message}
+        {...register('email')}
+      />
 
-      <label htmlFor="password">Password</label>
-      <input type="password" id="password" {...register('password')} />
-      {errors.password && (
-        <p className="errorMessage">{errors.password.message}</p>
-      )}
+      <Input
+        id="password"
+        type="password"
+        labelText="Password"
+        errorMessage={errors.password?.message}
+        {...register('password')}
+      />
 
       <button type="submit" className="actionButton">
         Login

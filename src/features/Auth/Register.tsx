@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useAuthContext } from './AuthContext';
 import { RegisterFormData, registerSchema } from './ValidationSchemas';
+import { Input } from '@/components/form/Input';
 
 export function Register() {
   const {
@@ -16,7 +17,7 @@ export function Register() {
   const { login } = useAuthContext();
 
   async function handleRegister(values: RegisterFormData) {
-    const send2Server = {...values};
+    const send2Server = { ...values };
     delete send2Server.retypePassword;
     const data = await fetch('http://localhost:3210/register', {
       method: 'POST',
@@ -24,14 +25,14 @@ export function Register() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(send2Server),
-    }).then(res => res.json());
+    }).then((res) => res.json());
 
-    if(!data.accessToken) {
+    if (!data.accessToken) {
       toast.error(data);
-      return;  
+      return;
     }
 
-    toast.success('You logged in successfully.')
+    toast.success('You logged in successfully.');
     login(data);
   }
 
@@ -42,37 +43,45 @@ export function Register() {
       noValidate
     >
       <h1>Register</h1>
-      <label htmlFor="email">Email</label>
-      <input type="email" id="email" {...register('email')} />
-      {errors.email && <p className="errorMessage">{errors.email.message}</p>}
+      <Input
+        id="email"
+        type="email"
+        labelText="Email"
+        errorMessage={errors.email?.message}
+        {...register('email')}
+      />
 
-      <label htmlFor="password">Password</label>
-      <input type="password" id="password" {...register('password')} />
-      {errors.password && (
-        <p className="errorMessage">{errors.password.message}</p>
-      )}
-
-      <label htmlFor="retypePassword">Retype Password</label>
-      <input
+      <Input
+        id="password"
         type="password"
+        labelText="Password"
+        errorMessage={errors.password?.message}
+        {...register('password')}
+      />
+
+      <Input
         id="retypePassword"
+        type="password"
+        labelText="Retype Password"
+        errorMessage={errors.retypePassword?.message}
         {...register('retypePassword')}
       />
-      {errors.retypePassword && (
-        <p className="errorMessage">{errors.retypePassword.message}</p>
-      )}
 
-      <label htmlFor="firstName">First Name</label>
-      <input type="text" id="firstName" {...register('firstName')} />
-      {errors.firstName && (
-        <p className="errorMessage">{errors.firstName.message}</p>
-      )}
+      <Input
+        id="firstName"
+        type="text"
+        labelText="First Name"
+        errorMessage={errors.firstName?.message}
+        {...register('firstName')}
+      />
 
-      <label htmlFor="lastName">Last Name</label>
-      <input type="text" id="lastName" {...register('lastName')} />
-      {errors.lastName && (
-        <p className="errorMessage">{errors.lastName.message}</p>
-      )}
+      <Input
+        id="lastName"
+        type="text"
+        labelText="Last Name"
+        errorMessage={errors.lastName?.message}
+        {...register('lastName')}
+      />
 
       <button type="submit" className="actionButton">
         Register
