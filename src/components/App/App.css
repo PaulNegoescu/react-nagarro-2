@@ -33,14 +33,29 @@ body {
     justify-self: start;
   }
 
-  label {
+  & label,
+  & .label {
     justify-self: end;
     align-self: center;
+  }
+
+  .selfStart {
+    align-self: start;
   }
 
   .errorMessage {
     grid-column-start: 2;
     margin: 0;
     color: #c00;
+  }
+
+  .checkGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+
+    & label,
+    & .label {
+      justify-self: start;
+    }
   }
 }

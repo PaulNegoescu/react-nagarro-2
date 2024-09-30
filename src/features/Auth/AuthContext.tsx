@@ -1,4 +1,4 @@
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import type { AuthValue, ContextValue } from './AuthTypes';
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
@@ -12,16 +12,20 @@ export const AuthContext = createContext<ContextValue | null>(null);
 export function AuthContextProvider({children}: {children: ReactNode}) {
   const [auth, setAuth] = useLocalStorageState('auth', initialValue);
 
-  function login(data: AuthValue) {
-    setAuth(data);
-  }
+  const ctxValue = useMemo(() => {
+    function login (data: AuthValue) {
+      setAuth(data);
+    }
 
-  function logout() {
-    setAuth(initialValue);
-  }
+    function logout() {
+      setAuth(initialValue);
+    }
+
+    return {...auth, login, logout}
+  }, [auth, setAuth]);
 
   return (
-    <AuthContext.Provider value={{...auth, login, logout}}>
+    <AuthContext.Provider value={ctxValue}>
       {children}
     </AuthContext.Provider>
   );

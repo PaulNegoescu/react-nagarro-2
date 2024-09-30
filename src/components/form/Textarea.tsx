@@ -12,18 +12,19 @@ interface Props
   > {
   id: string;
   labelText: string;
+  labelClassName?: string;
   name: string;
   errorMessage?: string;
 }
 
 export const Textarea = forwardRef(
   (
-    { id, labelText, errorMessage, children, ...props }: Props,
+    { id, labelText, errorMessage, children, labelClassName = '', ...props }: Props,
     ref: ForwardedRef<HTMLTextAreaElement>
   ) => {
     return (
       <>
-        <label htmlFor={id}>{labelText}</label>
+        <label htmlFor={id} className={labelClassName}>{labelText}</label>
         <textarea id={id} {...props} ref={ref}>{children}</textarea>
         {errorMessage && (
           <p className="errorMessage">{errorMessage}</p>

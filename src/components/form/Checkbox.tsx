@@ -10,22 +10,22 @@ interface Props
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  id: string;
   labelText: string;
   name: string;
-  labelClassName?: string;
   errorMessage?: string;
 }
 
-export const Input = forwardRef(
+export const Checkbox = forwardRef(
   (
-    { id, type = 'text', labelText, errorMessage, labelClassName = '',  ...props }: Props,
+    { labelText, errorMessage, ...props }: Props,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     return (
       <>
-        <label htmlFor={id} className={labelClassName}>{labelText}</label>
-        <input type={type} id={id} {...props} ref={ref} />
+        <label>
+          <input type="checkbox" {...props} ref={ref} />
+          {labelText}
+        </label>
         {errorMessage && (
           <p className="errorMessage">{errorMessage}</p>
         )}

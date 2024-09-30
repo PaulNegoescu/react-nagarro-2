@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
 
 export function useLocalStorageState<S>(
   key: string,
@@ -38,11 +38,11 @@ export function useLocalStorageState<S>(
     return typeof fct === 'function';
   }
 
-  function isSetStateFunction(fct: any): fct is (prevState: S) => S {
-    return typeof fct === 'function';
-  }
+  const updateValue = useCallback((newValue: SetStateAction<S>) => {
+    function isSetStateFunction(fct: any): fct is (prevState: S) => S {
+      return typeof fct === 'function';
+    }
 
-  function updateValue(newValue: SetStateAction<S>) {
     setValue((oldValue: S) => {
       let updatedValue;
 
@@ -55,7 +55,7 @@ export function useLocalStorageState<S>(
       localStorage.setItem(key, JSON.stringify(updatedValue));
       return updatedValue;
     });
-  }
+  }, [key]);
 
   return [value, updateValue] as const;
 }
